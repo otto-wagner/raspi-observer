@@ -1,0 +1,39 @@
+services:
+  raspi-observer:
+    build:
+      context: .
+      dockerfile: deployments/raspi-observer/Dockerfile
+    image: raspi-observer:local
+    container_name: raspi-observer
+    environment:
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: "${SERVER_PORT:-8080}"
+      ENVIRONMENT: development
+      HOST_PROC: "/host/proc"
+      ENABLE_RASPI_METRICS: "false"
+    ports:
+      - "8081:${SERVER_PORT:-8080}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /:/host:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:${SERVER_PORT:-8080}/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: raspi-observer-prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      raspi-observer:
+        condition: service_healthy
+    restart: unless-stopped

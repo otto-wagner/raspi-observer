@@ -1,0 +1,43 @@
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+      timezone: Europe/Berlin
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+      timezone: Europe/Berlin
+    labels:
+      - "dependabot :suspect:"
+    groups:
+      cargo:
+        patterns:
+          - "*"
+
+  - package-ecosystem: docker
+    directories:
+      - "/deployments/*"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+      timezone: Europe/Berlin
+    labels:
+      - "dependabot :suspect:"
+    groups:
+      docker:
+        patterns:
+          - "*"
