@@ -1,0 +1,19 @@
+---
+name: default_push
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: CI
+        run: |
+          if [ -f "Makefile" ]; then
+            make ci
+          fi
