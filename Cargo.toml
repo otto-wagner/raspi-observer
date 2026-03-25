@@ -5,7 +5,7 @@ edition = "2024"
 
 [dependencies]
 lazy_static = "1.5.0"
-prometheus = { version = "0.9", features = ["process"] }
+prometheus = { version = "0.14", features = ["process"] }
 rocket = { version = "0.5.1", features = ["json"] }
 bollard = "0.20.2"
 chrono = { version = "0.4.44", default-features = false, features = ["clock"] }
