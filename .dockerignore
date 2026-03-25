@@ -1,0 +1,9 @@
+target/
+.git/
+.github/
+.gitignore
+*.md
+docker-compose.yml
+prometheus.yml
+Makefile
+
