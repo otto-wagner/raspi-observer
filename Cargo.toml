@@ -10,4 +10,4 @@ rocket = { version = "0.5.1", features = ["json"] }
 bollard = "0.20.2"
 chrono = { version = "0.4.44", default-features = false, features = ["clock"] }
 futures-util = "0.3.32"
-libc = "0.2.183"
+libc = "0.2.186"
